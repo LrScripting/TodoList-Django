@@ -15,7 +15,7 @@
     <body>
         <div class="container">
           
-            <h1>My to do list</h1>
+            <h1>Vantage Logger</h1>
             <form action="/addTodoItem/" method="post">{% csrf_token %}
                 <input type="text" name="content">
                 <input type="submit" value="Add Item">
@@ -29,6 +29,12 @@
                     </li>
                 {% endfor %}
             </ul>
+            <form action='/emailTodoList/' method="post">
+                {%csrf_token%}
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <input type="submit" value="Email Logs!">
+            </form>
         </div>
         <script src="" async defer></script>
     </body>

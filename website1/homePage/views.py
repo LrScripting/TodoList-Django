@@ -2,7 +2,17 @@ from django.shortcuts import render
 from .models import TodoListItem
 from django.http import HttpResponseRedirect
 from datetime import datetime
+from django.core.mail import send_mail
+from datetime import date
 # Create your views here.
+
+def emailList(request):
+    email = request.POST.get("email")
+
+    allLogs = TodoListItem.objects.all()
+    itemList = '\n'.join([i.content for i in allLogs])
+    send_mail(f'Logs for: {date.today()}',itemList, 'bigbelta1234@gmail.com', [email], fail_silently=False )
+    return HttpResponseRedirect('/')
 
 def gettime():
     now = datetime.now()
@@ -13,7 +23,7 @@ def homePage(request):
 
 def addTodoView(request):
     x = request.POST['content']
-    new_item = TodoListItem(content = f"{x}")
+    new_item = TodoListItem(content = f"{x} at: {gettime()}")
     new_item.save()
     return HttpResponseRedirect('/')
 
